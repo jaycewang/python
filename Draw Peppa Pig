@@ -2,7 +2,7 @@
 
 import turtle as t
 
-
+t.bgcolor("#87CEFA")
 
 t.pensize(5)
 
@@ -74,7 +74,8 @@ t.begin_fill()
 
 t.circle(5)
 
-t.color(160,82,45)
+#t.color(160,82,45)
+t.color(255,155,192)
 
 t.end_fill()
 
@@ -95,8 +96,8 @@ t.seth(10)
 t.begin_fill()
 
 t.circle(5)
-
-t.color(160,82,45)
+t.color(255,155,192)
+#t.color(160,82,45)
 
 t.end_fill()
 
@@ -339,8 +340,8 @@ t.end_fill()
 
 
 #嘴
-
-t.color(239,69,19)
+t.color(255,155,192)
+#t.color(239,69,19)
 
 t.pu()
 
@@ -409,6 +410,7 @@ t.end_fill()
 
 
 #手
+t.pensize(10)
 
 t.color((255,155,192))
 
@@ -484,7 +486,8 @@ t.circle(20,90)
 
 t.pensize(10)
 
-t.color((240,128,128))
+t.color((255,155,192))
+#t.color((240,128,128))
 
 t.pu()
 
@@ -514,7 +517,8 @@ t.fd(20)
 
 t.pensize(10)
 
-t.color((240,128,128))
+t.color((255,155,192))
+#t.color((240,128,128))
 
 t.pu()
 
@@ -567,5 +571,29 @@ t.circle(70,20)
 t.circle(10,330)
 
 t.circle(70,30)
+
+#t.done()
+
+#写字peppa pig
+t.pensize(10)
+
+t.color(255,155,192)
+
+t.pu()
+t.goto(-410,0)
+t.pd()
+t.write("Peppa Pig", font=("Showcard Gothic", 40, "bold"))
+
+
+t.pensize(4)
+t.color((255,155,192))
+t.pu()
+t.goto(-100,15)
+t.pd()
+t.seth(0)
+t.circle(70,20)
+t.circle(10,330)
+t.circle(70,25)
+
 
 t.done()
