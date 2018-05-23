@@ -1,0 +1,80 @@
+#将截图功能和文字识别保存为txt文件的功能合并
+#! /usr/bin/python
+# -*- coding: UTF-8 -*-
+
+#监控键盘
+import keyboard
+from PIL import ImageGrab
+from time import sleep
+import sys
+
+
+from aip import AipOcr
+import json
+import os
+
+
+
+def screenShot():
+    "监控键盘并保存截图"
+
+    if keyboard.wait(hotkey='f1')==None:  #等待直到按下f1
+        if keyboard.wait(hotkey='ctrl+c')==None:  #等待直到按下ctrl+c
+            sleep(0.01)#稍作停顿
+            im = ImageGrab.grabclipboard()
+            im.save('ImageGrab.png')
+
+
+#for _ in range(sys.maxsize):  #截图次数，sys.maxsize最大整数次
+  #  screenShot()
+while True:
+    if os.path.exists('ImageGrab.png')==False:
+        screenShot()
+    else:
+        # 定义常量 api用户密码,baiduapi账户
+        APP_ID = '%%%%%%%%'
+        APP_KEY = '%%%%%%%%%%%%'
+        SECRET_KEY = '%%%%%%%%%%%%%'
+
+        # 初始化aip对象
+        aipOcr = AipOcr(APP_ID, APP_KEY, SECRET_KEY)
+
+        # 读取图片
+        filePath = "ImageGrab.png"
+
+
+        def getFileContent(filePath):
+            with open(filePath, 'rb') as fp:
+                return fp.read()
+
+
+        # 定义参数变量
+        options = {
+            'detect_direction': 'ture',
+            'language_type': 'CHN_ENG',
+        }
+
+        # 调用文字识别接口
+        result = aipOcr.basicGeneral(getFileContent(filePath), options)
+        texts = json.dumps(result).encode('latin-1').decode("unicode-escape")
+        # 字符串转换为字典
+        texts = json.loads(texts)
+
+        # 提取识别的文字部分
+        for words in texts["words_result"]:
+            print(words.get("words"))
+        # 将文字汇集在同一行
+        allTexts = ''
+        for words in texts["words_result"]:
+            allTexts = allTexts + ''.join(words.get("words", ''))
+        print(allTexts)
+
+        # 写入txt文件
+        f = open('ImageResult.txt', 'w')
+        f.write(allTexts)
+        f.close()
+
+        break
+
+
+
